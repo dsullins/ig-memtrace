@@ -44,17 +44,23 @@ namespace MemTrace
 
 #if MEMTRACE_ENABLE
 
+#if defined MEMTRACE_DLL_EXPORT
+#define MEMTRACE_API __declspec(dllexport)
+#else
+#define MEMTRACE_API __declspec(dllimport)
+#endif
+
   // Get connection parameters specified on the command line, if any (returns true)
   // Useful to forward memtrace configuration along to spawned child processes.
   bool    GetSocketData(char (&ip_addr_out)[128], int* port_out);
 
   void    InitFile(const char *trace_temp_file);
 
-  void    InitSocket(const char *server_ip_address, int server_port);
+  void    MEMTRACE_API InitSocket(const char *server_ip_address, int server_port);
 
-  void    Shutdown();
+  void    MEMTRACE_API Shutdown();
 
-  void    UserMark(const char* label, ...);
+  void    MEMTRACE_API UserMark(const char* label, ...);
 
   void    Flush();
 
@@ -64,13 +70,13 @@ namespace MemTrace
   void    VirtualCommit(const void* base, size_t size_bytes);
   void    VirtualDecommit(const void* base, size_t size_bytes);
 
-  HeapId  HeapCreate(const char* name);
-  void    HeapDestroy(HeapId heap_id);
-  void    HeapAddCore(HeapId heap_id, const void* base, size_t size_bytes);
-  void    HeapRemoveCore(HeapId heap_id, const void* base, size_t size_bytes);
-  void    HeapAllocate(HeapId heap_id, const void* ptr, size_t size_bytes);
-  void    HeapReallocate(HeapId heap_id, const void* ptr_in, const void* ptr_out, size_t new_size_bytes);
-  void    HeapFree(HeapId heap_id, const void* ptr);
+  HeapId  MEMTRACE_API HeapCreate(const char* name);
+  void    MEMTRACE_API HeapDestroy(HeapId heap_id);
+  void    MEMTRACE_API HeapAddCore(HeapId heap_id, const void* base, size_t size_bytes);
+  void    MEMTRACE_API HeapRemoveCore(HeapId heap_id, const void* base, size_t size_bytes);
+  void    MEMTRACE_API HeapAllocate(HeapId heap_id, const void* ptr, size_t size_bytes);
+  void    MEMTRACE_API HeapReallocate(HeapId heap_id, const void* ptr_in, const void* ptr_out, size_t new_size_bytes);
+  void    MEMTRACE_API HeapFree(HeapId heap_id, const void* ptr);
 
   void    PushScope(ScopeKind kind, const char* str, ScopeKind* old_kind, const char** old_str);
   void    RestoreScope(ScopeKind kind, const char* str);
