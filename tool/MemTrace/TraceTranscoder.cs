@@ -529,8 +529,7 @@ namespace MemTrace
           return false;
         }
 
-        if (!MetaData.Symbols.Contains(frames[i]))
-          MetaData.Symbols.Add(frames[i]);
+        MetaData.Symbols.Add(frames[i]);
       }
 
       ++m_SeenStackRollback;

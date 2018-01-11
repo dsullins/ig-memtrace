@@ -43,7 +43,7 @@ namespace MemTrace
     /// <summary>
     /// Symbols that appear in the trace file.
     /// </summary>
-    public List<ulong> Symbols { get; internal set; }
+    public SortedSet<ulong> Symbols { get; internal set; }
     /// <summary>
     /// Position in the file where the footer lives
     /// </summary>
@@ -93,7 +93,7 @@ namespace MemTrace
     internal TraceMeta()
     {
       Status = TraceStatus.Ready;
-      Symbols = new List<ulong>();
+      Symbols = new SortedSet<ulong>();
       ResolvedSymbols = new Dictionary<ulong, SymbolInfo>();
       m_Marks = new List<TraceMark>();
       PlatformName = "Unknown";
@@ -161,7 +161,7 @@ namespace MemTrace
 
           {
             int symcount = br.ReadInt32();
-            Symbols = new List<ulong>(symcount);
+            Symbols = new SortedSet<ulong>();
             for (int i = 0; i < symcount; ++i)
             {
               var addr = br.ReadUInt64();
