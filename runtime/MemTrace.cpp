@@ -95,7 +95,7 @@ namespace MemTrace
     kBufferSize     = 32768,
     kMaxStrings     = 1024,   // Max string hashes to keep around
     kMaxStacks      = 1024,   // Max call stack hashes to keep around
-    kMaxFrames      = 256,    // Max frames in single callstack - needs to be large to capture all of it
+    kMaxFrames      = 512,    // Max frames in single callstack - needs to be large to capture all of it
   };
 
   // Start of stream protocol value - to handle version changes without crashing decoder.
