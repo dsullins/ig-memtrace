@@ -28,7 +28,7 @@ namespace MemTraceTool
       {
         // Load default settings.
         string dir = Path.GetDirectoryName(typeof(MainWindow).Assembly.Location);
-        string defaults = Path.Combine(dir, @"DefaultOptions.json");
+        string defaults = Path.Combine(dir, "Resources", @"DefaultOptions.json");
 
         m_Options = Options.LoadFromFile(defaults);
 
