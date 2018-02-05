@@ -9,7 +9,7 @@
     "MemTrace::HeapFree"
   ],
   "EnableSuppression": true,
-  "BindAddress": "127.0.0.0",
+  "BindAddress": "127.0.0.1",
   "BindPort": 9811,
   "SymbolPaths": [
   ],
