@@ -89,7 +89,14 @@ namespace MemTrace
 
       m_Socket = new TcpListener(BindAddress, BindPort);
 
-      m_Socket.Start();
+      try
+      {
+        m_Socket.Start();
+      }
+      catch (SocketException e)
+      {
+        throw new ApplicationException(e.Message + ". Current IP is " + m_Socket.LocalEndpoint, e);
+      }
 
       m_Socket.BeginAcceptSocket(OnIncomingConnection, null);
     }

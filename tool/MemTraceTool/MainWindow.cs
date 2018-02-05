@@ -47,7 +47,14 @@ namespace MemTraceTool
       m_Listener.BindPort = m_Options.BindPort;
       m_Listener.TraceDirectory = m_Options.TraceDirectory;
 
-      m_Listener.Start();
+      try
+      {
+        m_Listener.Start();
+      }
+      catch (Exception e)
+      {
+        MessageBox.Show(e.Message);
+      }
 
       ScanTraceDirectory();
     }
