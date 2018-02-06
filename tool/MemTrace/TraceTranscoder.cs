@@ -634,20 +634,31 @@ namespace MemTrace
       long stkpos = m_Out.BaseStream.Position;
       long stktab_sz = 8 * m_SeenStacks.Count;
       {
-        var buf = new MemoryStream();
-        var bufh = new BinaryWriter(buf);
+        // MemoryStream.Capacity can't be larger than 4G. So we use multiple streams.
+        var addressList = new List<BinaryWriter>();
+        uint addressBufLength = 0;
+
         foreach (var s in m_SeenStacks)
         {
           int cnt = s.Length;
-          m_Out.Write((uint)(stktab_sz + buf.Length));
+          m_Out.Write((uint)(stktab_sz + addressBufLength));
           m_Out.Write(cnt);
+
+          var addressStream = new BinaryWriter(new MemoryStream());
+          addressList.Add(addressStream);
           foreach (ulong addr in s)
           {
-            bufh.Write(addr);
+            addressStream.Write(addr);
           }
+
+          addressBufLength += (uint)addressStream.BaseStream.Length;
         }
-        buf.Position = 0;
-        buf.CopyTo(m_Out.BaseStream);
+
+        foreach (var addressStream in addressList)
+        {
+          addressStream.BaseStream.Position = 0;
+          addressStream.BaseStream.CopyTo(m_Out.BaseStream);
+        }
       }
 
       // Patch up offsets
